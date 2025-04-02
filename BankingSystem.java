@@ -57,7 +57,15 @@ class BankAccount
     //Interest method
     void interest(float interest)
     {
-        this.balance += this.balance * interest;
+        if(accountType == "savings")
+        {
+            this.balance += this.balance * interest;
+            System.out.println("Interest applied. New balance: $" + balance);
+        }
+        else 
+        {
+            System.out.println("Interest is only applicable for Savings accounts.");
+        }
     }
 
     //Balance checking
@@ -68,6 +76,8 @@ class BankAccount
 
 }
 
+
+// Main class
 public class BankingSystem {
 
     // To Do
