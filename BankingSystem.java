@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 class BankAccount
 {
@@ -7,6 +8,7 @@ class BankAccount
     private double balance;
     private String accountType;
     private float interest;
+    private double overdraftLimit = 0; // Only for current accounts
 
     //Parameterized constructor
     BankAccount(long accountNum, String accountHolderName, double balance, String accountType)
@@ -14,6 +16,15 @@ class BankAccount
         this.accountNum = accountNum;
         this.accountHolderName = accountHolderName;
         this.balance = balance;
+        this.accountType = accountType;
+    }
+
+    // Constructor overloading (No initial deposit)
+    BankAccount(long accountNum, String accountHolderName, String accountType)
+    {
+        this.accountNum = accountNum;
+        this.accountHolderName = accountHolderName;
+        this.balance = 0.0;
         this.accountType = accountType;
     }
 
@@ -38,7 +49,7 @@ class BankAccount
     void withdraw(double amount)
     {
         //Check if the balance is enough for the operation
-        if(this.balance >= amount && amount > 0)
+        if((this.balance + overdraftLimit )>= amount && amount > 0)
         {
             //Deducting amount for the balance
             this.balance -= amount;
@@ -79,6 +90,10 @@ class BankAccount
 
 // Main class
 public class BankingSystem {
+    public static void main(String[] args) 
+    {
+        Scanner scanner = new Scanner(System.in);
+        //System.out.println("");
+    }
 
-    // To Do
 }
