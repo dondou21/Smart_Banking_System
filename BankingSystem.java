@@ -9,7 +9,7 @@ class Account
     private double balance;
     private String accountType;
     private float interest;
-    private double overdraftLimit = 0; // Only for current accounts
+    private double overdraftLimit = 2000; // Only for current accounts
 
     //Parameterized constructor
     Account(long accountNum, String accountHolderName, double balance, String accountType)
@@ -49,6 +49,11 @@ class Account
     //withdraw method
     void withdraw(double amount)
     {
+        //Check the account type
+        if (this.accountType.equals("Savings")) {
+            System.out.println("Withdrawals are NOT allowed for Savings accounts.");
+            return;
+        }
         //Check if the balance is enough for the operation
         if((this.balance + overdraftLimit )>= amount && amount > 0)
         {
@@ -69,7 +74,7 @@ class Account
     //Interest method
     void interest(float interest)
     {
-        if (accountType.equals("savings"))
+        if (accountType.equals("Savings"))
         {
             this.balance += this.balance * interest;
             System.out.println("Interest applied. New balance: $" + balance);
@@ -122,8 +127,9 @@ public class BankingSystem {
             System.out.println("2. Deposit");
             System.out.println("3. Withdraw");
             System.out.println("4. Check Balance");
-            System.out.println("5. View Account Details");
-            System.out.println("6.Exit");
+            System.out.println("5. Apply Interest");
+            System.out.println("6. View Account Details");
+            System.out.println("0.Exit");
             System.out.println("\n=================\n");
             System.out.println("Enter Your Choice: ");
 
@@ -146,9 +152,12 @@ public class BankingSystem {
                     checkBalance();
                     break;
                 case 5:
-                    viewAccountDetails();
+                    applyInterest();
                     break;
                 case 6:
+                    viewAccountDetails();
+                    break;
+                case 0:
                     System.out.println("Exiting... Thank You!");
                     return;
                 default:
@@ -158,23 +167,53 @@ public class BankingSystem {
     }
 
     //Account creation
-    private static void createAccount()
-    {
-        System.out.println("Enter Account Number: ");
+        private static void createAccount() {
+        System.out.print("Enter Account Number: ");
         long accNum = scanner.nextLong();
-        scanner.nextLine();
+        scanner.nextLine(); // consume newline
 
-        System.out.println("Enter Account Holder Name: ");
-        String accHolder  = scanner.nextLine();
+        System.out.print("Enter Account Holder Name: ");
+        String accHolder = scanner.nextLine();
 
-        System.out.println("Enter Initial Balance: ");
-        double balance = scanner.nextDouble();
+        System.out.println("Choose Account Type:");
+        System.out.println("1. Savings");
+        System.out.println("2. Current");
+        int typeChoice = scanner.nextInt();
+        scanner.nextLine(); // consume newline
 
-        System.out.println("Enter Account Type (Savings/Current): ");
-        String accType = scanner.next();
+        String accType;
+        if (typeChoice == 1) 
+        {
+            accType = "Savings";
+        } else if (typeChoice == 2) 
+        {
+            accType = "Current";
+        } else 
+        {
+            System.out.println("Invalid choice. Account not created.");
+            return;
+        }
 
-        accounts.add(new Account(accNum, accHolder, balance, accType));
-        System.out.println("Account Created Successfully!");
+        System.out.println("Do you want to add an initial deposit?");
+        System.out.println("1. Yes");
+        System.out.println("2. No");
+        int response = scanner.nextInt();
+
+        if (response == 1) 
+        {
+            System.out.print("Enter Initial Balance: ");
+            double balance = scanner.nextDouble();
+            accounts.add(new Account(accNum, accHolder, balance, accType));
+        } else if (response == 2) 
+        {
+            accounts.add(new Account(accNum, accHolder, accType));
+        } else 
+        {
+            System.out.println("Invalid choice. Account not created.");
+            return;
+        }
+
+        System.out.println(accType + " Account Created Successfully!");
     }
 
     //Transaction method
@@ -236,6 +275,54 @@ public class BankingSystem {
             System.out.println("Account no found");
         }
     }
+
+    //Applying Interest
+    private static void applyInterest()
+    {
+        System.out.println("Enter Account Number: ");
+        long accNum = scanner.nextLong();
+
+        Account account = findAccount(accNum);
+        if (account == null)
+        {
+            System.out.println("Account not found!");
+            return;
+        }
+
+        //Check if the account has more than a year
+        System.out.println("Has the account been active for more than a year?");
+        System.out.println("1. Yes");
+        System.out.println("2. No");
+        int yearChoice = scanner.nextInt();
+
+        if (yearChoice != 1) 
+        {
+            System.out.println("Interest is only applicable after one year.");
+            return;
+        }
+
+        //Check if the account have already receive the interest
+        System.out.println("Has the interest already been received?");
+        System.out.println("1. No");
+        System.out.println("2. Yes");
+        int interestReceivedChoice = scanner.nextInt();
+
+        if (interestReceivedChoice == 1)
+        {
+            System.out.print("Enter interest rate (e.g., 0.05 for 5%): ");
+            float rate = scanner.nextFloat();
+            account.interest(rate);
+        }
+        else if (interestReceivedChoice == 2)
+        {
+            System.out.println("Interest not applied.");
+        }
+        else
+        {
+            System.out.println("Invalid input. Please enter 1 for 'yes' or 2 for 'no'.");
+        }
+    }
+
 
     //Searching an account
     private static Account findAccount(long accountNum)
