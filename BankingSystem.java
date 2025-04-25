@@ -94,10 +94,10 @@ class Account
     //Displaying account details
     void displayDetails() 
     {
-        System.out.println("Account Number: " + accountNum);
+        System.out.println("\n\n\nAccount Number: " + accountNum);
         System.out.println("Account Holder: " + accountHolderName);
-        System.out.println("Balance: " + balance);
-        System.out.println("Account Type: " + accountType);
+        System.out.println("Balance: $" + balance);
+        System.out.println("Account Type: " + accountType + "\n\n");
     }
 
      //Get the account number
@@ -105,6 +105,12 @@ class Account
     {
         return accountNum;
     }
+
+    // Get account type
+    public String getAccountType() {
+    return accountType;
+    }
+
 
 
 }
@@ -277,51 +283,57 @@ public class BankingSystem {
     }
 
     //Applying Interest
-    private static void applyInterest()
+   private static void applyInterest()
+{
+    System.out.println("Enter Account Number: ");
+    long accNum = scanner.nextLong();
+
+    Account account = findAccount(accNum);
+    if (account == null)
     {
-        System.out.println("Enter Account Number: ");
-        long accNum = scanner.nextLong();
+        System.out.println("Account not found!");
+        return;
+    } 
 
-        Account account = findAccount(accNum);
-        if (account == null)
-        {
-            System.out.println("Account not found!");
-            return;
-        }
-
-        //Check if the account has more than a year
-        System.out.println("Has the account been active for more than a year?");
-        System.out.println("1. Yes");
-        System.out.println("2. No");
-        int yearChoice = scanner.nextInt();
-
-        if (yearChoice != 1) 
-        {
-            System.out.println("Interest is only applicable after one year.");
-            return;
-        }
-
-        //Check if the account have already receive the interest
-        System.out.println("Has the interest already been received?");
-        System.out.println("1. No");
-        System.out.println("2. Yes");
-        int interestReceivedChoice = scanner.nextInt();
-
-        if (interestReceivedChoice == 1)
-        {
-            System.out.print("Enter interest rate (e.g., 0.05 for 5%): ");
-            float rate = scanner.nextFloat();
-            account.interest(rate);
-        }
-        else if (interestReceivedChoice == 2)
-        {
-            System.out.println("Interest not applied.");
-        }
-        else
-        {
-            System.out.println("Invalid input. Please enter 1 for 'yes' or 2 for 'no'.");
-        }
+    // ✅ Properly check if it's a Savings account
+    if (!account.getAccountType().equalsIgnoreCase("Savings")) {
+        System.out.println("Interest is only applicable for Savings accounts.");
+        return;
     }
+
+    //Check if the account has more than a year
+    System.out.println("Has the account been active for more than a year?");
+    System.out.println("1. Yes");
+    System.out.println("2. No");
+    int yearChoice = scanner.nextInt();
+
+    if (yearChoice != 1) 
+    {
+        System.out.println("Interest is only applicable after one year.");
+        return;
+    }
+
+    //Check if the account have already received the interest
+    System.out.println("Has the interest already been received?");
+    System.out.println("1. No");
+    System.out.println("2. Yes");
+    int interestReceivedChoice = scanner.nextInt();
+
+    if (interestReceivedChoice == 1)
+    {
+        System.out.print("Enter interest rate (e.g., 0.05 for 5%): ");
+        float rate = scanner.nextFloat();
+        account.interest(rate);
+    }
+    else if (interestReceivedChoice == 2)
+    {
+        System.out.println("Interest not applied.");
+    }
+    else
+    {
+        System.out.println("Invalid input. Please enter 1 for 'yes' or 2 for 'no'.");
+    }
+}
 
 
     //Searching an account

@@ -5,6 +5,7 @@ Implement a Smart Banking System using OOPs Concepts in Java
 1. Divin 
 2. Dondou
 3. Viviane
+4. Janviere
 
 ## Title: Smart Banking System
 
