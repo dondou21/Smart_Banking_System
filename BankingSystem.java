@@ -77,7 +77,8 @@ class Account
         if (accountType.equals("Savings"))
         {
             this.balance += this.balance * interest;
-            System.out.println("Interest applied. New balance: $" + balance);
+            String formattedBalance = String.format("%.2f", balance);
+            System.out.println("Interest applied. New balance: $" + formattedBalance);
         }
         else 
         {
@@ -295,7 +296,7 @@ public class BankingSystem {
         return;
     } 
 
-    // ✅ Properly check if it's a Savings account
+    //  Properly check if it's a Savings account
     if (!account.getAccountType().equalsIgnoreCase("Savings")) {
         System.out.println("Interest is only applicable for Savings accounts.");
         return;
