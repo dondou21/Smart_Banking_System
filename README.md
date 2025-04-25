@@ -65,10 +65,9 @@ beyond their balance, up to a certain overdraft limit.
 ➢ Maintain accountType (String – "Savings" or "Current")
 
 ### Assignment Type
-Group Assignment (Each group consists of 4 students)
+Group Assignment for 4 
 
 
 ### Submission & Presentation Deadline
-Friday, 4th [Month] 2025
-• Group C: Submission & Presentation at 8:30 AM
-• Group D: Submission & Presentation at 1:30 PM
+Friday, 25th April 2025
+
