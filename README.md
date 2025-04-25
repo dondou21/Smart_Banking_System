@@ -2,10 +2,10 @@
 Implement a Smart Banking System using OOPs Concepts in Java
 
 ## Group members:
-1. Divin 
-2. Dondou
-3. Viviane
-4. Janviere
+1. HIRWA Paul Divin 27003 
+2. Dondou Abiyi 25188
+3. Cirhulwire Kalembu Viviane 26990
+4. Akimana janviere 26769
 
 ## Title: Smart Banking System
 
